@@ -48,15 +48,18 @@ class TerraformClient {
     }
   }
 
-  getOutputVariable(variableName) {
+  getOutputVariable(variableName, tCwd) {
     // Cache-lookup short-circuit:
     if (this.outputVariableCache[variableName]) {
       return this.outputVariableCache[variableName];
     }
 
     try {
+      var options = {
+        cwd: tCwd
+      }
       // Fetch via external execution:
-      const outputVariableValue = this.execSync(`terraform output ${variableName}`)
+      const outputVariableValue = this.execSync(`terraform output ${variableName}`, options)
         .toString('utf8')
         .trim();
 
