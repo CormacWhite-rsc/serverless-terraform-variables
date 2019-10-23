@@ -1,8 +1,8 @@
 {
   "name": "serverless-terraform-variables-cwd",
-  "version": "0.2.1",
+  "version": "0.0.2",
   "description": "This is a fork of serverless-terraform-variables <https://github.com/sbchapin/serverless-terraform-variables>. Serverless plugin to retrieve terraform output variables for interpolation in serverless configuration.",
-  "author": "Cormac White <cwhi101419@rsccorp.radiosys.com>, (Original) Sam Chapin <chap.s.b@gmail.com>",
+  "author": "Cormac White <cwhi101419@rsccorp.radiosys.com> (Original)",
   "license": "MIT",
   "main": "src/serverless-terraform-variables.js",
   "repository": {

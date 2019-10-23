@@ -1,7 +1,7 @@
 const { execSync } = require('child_process');
 
 class TerraformClient {
-  constructor(options) {
+  constructor(options, tCwd) {
     if (options && options.execSync) {
       this.execSync = options.execSync;
     } else {
@@ -9,9 +9,12 @@ class TerraformClient {
     }
     this.outputVariableCache = {};
 
+    var execOptions = {
+      cwd: tCwd
+    }
     // Sanity check for terraform:
     try {
-      const stdout = this.execSync('terraform version').toString('utf8');
+      const stdout = this.execSync('terraform version',execOptions).toString('utf8');
       const validVersionRegex = /\bv\d+([.]\d+){2}\b/;
       if (!stdout.match(validVersionRegex)) {
         throw new Error(`Could not parse version of terraform from the following: ${stdout}`);
@@ -26,7 +29,7 @@ class TerraformClient {
     }
     // Sanity check for terraform state:
     try {
-      this.execSync('terraform state list');
+      this.execSync('terraform state list',execOptions);
     } catch (err) {
       throw new Error(
         `Could not retrieve terraform state.\n` +
@@ -37,7 +40,7 @@ class TerraformClient {
     }
     // Sanity check for terraform outputs:
     try {
-      this.execSync('terraform output');
+      this.execSync('terraform output',execOptions);
     } catch (err) {
       throw new Error(
         `Could not retrieve terraform output from terraform state.\n` +
